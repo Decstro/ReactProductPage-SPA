@@ -44,9 +44,18 @@ function ProductPage() {
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {isMobile && (
-        <Box>
-          <Typography variant="h5" gutterBottom>Mobile Layout</Typography>
-          {/* Mobile-specific layout goes here */}
+        <Box display="flex" flexDirection="column" gap={3}>
+          {/* Title */}
+          <Box textAlign="center">
+            <Typography variant="h5">Product Title</Typography>
+            <Typography variant="subtitle2">Subtitle goes here</Typography>
+          </Box>
+
+          {/* Carousel */}
+          <Box bgcolor="#eee" height={250}>[Carousel Here]</Box>
+
+          {/* Info + Card */}
+          <Box bgcolor="#ddd" p={2}>[Extra Card]</Box>
         </Box>
       )}
 
