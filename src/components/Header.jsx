@@ -1,38 +1,25 @@
-import { Box } from '@mui/material';
-import { FaBars, FaUser } from 'react-icons/fa';
+import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Header() {
   return (
-    <Box
-      component="header"
+    <AppBar
+      position="fixed"
       sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        width: '100%',
         backgroundColor: '#1a1a1a',
         height: '5vh',
-        p: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        zIndex: 1100,
+        minHeight: 48,
+        justifyContent: 'center',
+        boxShadow: 'none',
       }}
+      component="header"
     >
-      <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', pl: 2 }}>
-        <FaBars
-          className="header-icon"
-          style={{ color: 'white', fontSize: 28, cursor: 'pointer' }}
-        />
-      </Box>
-      <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', pr: 2 }}>
-        <FaUser
-          className="header-icon"
-          style={{ color: 'white', fontSize: 28, cursor: 'pointer' }}
-        />
-      </Box>
-    </Box>
+      <Toolbar variant="dense">
+        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
   );
 }
 
