@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-function ProductPage() { 
-  const [count, setCount] = useState(0)
+function ProductPage() {
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -18,7 +18,7 @@ function ProductPage() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
 export default ProductPage;

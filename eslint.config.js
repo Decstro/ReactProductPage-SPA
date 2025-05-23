@@ -42,6 +42,18 @@ export default [
       'prefer-template': 'warn',
       'no-useless-concat': 'warn',
       'template-curly-spacing': ['error', 'never'],
+      'semi': ['error', 'always'],
+      // Disallow trailing spaces
+      'no-trailing-spaces': 'error',
+
+      // Enforce a maximum line length (e.g., 100 characters)
+      'max-len': ['warn', { code: 100, tabWidth: 2, ignoreUrls: true }],
+
+      // Disallow nested ternary expressions
+      'no-nested-ternary': 'error',
+
+      // Enforce a newline at the end of files
+      'eol-last': ['error', 'always'],
     },
   },
-]
+];
