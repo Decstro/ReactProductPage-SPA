@@ -1,19 +1,25 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import prettier from 'eslint-config-prettier';
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'build'] },
+
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      sourceType: 'module',
       parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
       },
     },
     plugins: {
@@ -21,13 +27,21 @@ export default [
       'react-refresh': reactRefresh,
     },
     rules: {
+      // ✅ Base ESLint rules
       ...js.configs.recommended.rules,
+
+      // ✅ React Hooks rules
       ...reactHooks.configs.recommended.rules,
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+
+      // ✅ Optional: Prettier (disables formatting rules to avoid conflicts)
+      ...prettier.rules,
+
+      // ✅ Custom rules
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'prefer-template': 'warn',
+      'no-useless-concat': 'warn',
+      'template-curly-spacing': ['error', 'never'],
     },
   },
 ]
