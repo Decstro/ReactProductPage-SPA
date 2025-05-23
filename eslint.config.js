@@ -26,6 +26,7 @@ export default [
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
+    // I need to add the rules for indentation
     rules: {
       // ✅ Base ESLint rules
       ...js.configs.recommended.rules,
@@ -37,6 +38,7 @@ export default [
       ...prettier.rules,
 
       // ✅ Custom rules
+      'indent': ["error", 2],
       'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prefer-template': 'warn',

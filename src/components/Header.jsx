@@ -22,10 +22,16 @@ function Header() {
       }}
     >
       <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', pl: 2 }}>
-        <FaBars style={{ color: 'white', fontSize: 18 }} />
+        <FaBars
+          className="header-icon"
+          style={{ color: 'white', fontSize: 28, cursor: 'pointer' }}
+        />
       </Box>
       <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', pr: 2 }}>
-        <FaUser style={{ color: 'white', fontSize: 18 }} />
+        <FaUser
+          className="header-icon"
+          style={{ color: 'white', fontSize: 28, cursor: 'pointer' }}
+        />
       </Box>
     </Box>
   );

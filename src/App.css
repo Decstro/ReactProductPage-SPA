@@ -55,3 +55,12 @@ main {
 .read-the-docs {
   color: #888;
 }
+
+.header-icon {
+  transition: box-shadow 0.2s;
+}
+
+.header-icon:hover {
+  box-shadow: 0 0 8px 2px white;
+  border-radius: 50%;
+}
