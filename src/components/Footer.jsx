@@ -12,14 +12,20 @@ function Footer() {
         left: 0,
         right: 0,
         width: '100%',
-        backgroundColor: 'grey.900',
-        p: 2,
+        height: '5vh',
+        backgroundColor: '#1a1a1a',
+        p: 0,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <Typography variant="body2" color="white" align="center" sx={{ width: '100%' }}>
+      <Typography
+        variant="h6"
+        color="white"
+        align="center"
+        sx={{ width: '100%', fontSize: '1.2rem' }}
+      >
         © {new Date().getFullYear()} All rights reserved
         {!isSmallScreen && (
           <>
@@ -30,5 +36,4 @@ function Footer() {
     </Box>
   );
 }
-
 export default Footer;
