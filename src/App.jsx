@@ -4,13 +4,14 @@ import ProductPage from './components/ProductPage';
 import Footer from './components/Footer';
 
 function App() {
-
   return (
-    <>
+    <div className="app-container">
       <Header />
-      <ProductPage />
+      <main>
+        <ProductPage />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
