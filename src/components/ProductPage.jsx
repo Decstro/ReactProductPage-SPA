@@ -18,16 +18,42 @@ import { Add, Remove } from '@mui/icons-material';
 // Components
 import ImageCarousel from './ImageCarousel';
 
+// Images
+import frontXboxSeriesX from '../assets/productImages/frontXbox.png';
+import backXboxSeriesX from '../assets/productImages/backXbox.png';
+import fullXboxSeriesX from '../assets/productImages/fullXbox.png';
+import xboxBlackBoxSeriesX from '../assets/productImages/xboxBlackBox.png';
+import frontXboxSeriesS from '../assets/productImages/frontXboxS.png';
+import backXboxSeriesS from '../assets/productImages/backXboxS.png';
+import fullXboxSeriesS from '../assets/productImages/fullXboxS.png';
+import xboxBlackBoxSeriesS from '../assets/productImages/xboxBlackBoxS.png';
+
+const xboxSeriesXImages = [
+  { imgPath: frontXboxSeriesX, alt: 'XboxFront' },
+  { imgPath: fullXboxSeriesX, alt: 'XboxPart' },
+  { imgPath: backXboxSeriesX, alt: 'XboxBack' },
+  { imgPath: xboxBlackBoxSeriesX, alt: 'XboxBlackBox' },
+];
+
+const xboxSeriesSImages = [
+  { imgPath: frontXboxSeriesS, alt: 'XboxFront' },
+  { imgPath: fullXboxSeriesS, alt: 'XboxPart' },
+  { imgPath: backXboxSeriesS, alt: 'XboxBack' },
+  { imgPath: xboxBlackBoxSeriesS, alt: 'XboxBlackBox' },
+];
+
 
 function ProductPage() {
   const theme = useTheme();
   const [quantity, setQuantity] = useState(1);
   const [selectedConsole, setSelectedConsole] = useState('X');
+  const [selectedImages, setSelectedImages] = useState(xboxSeriesXImages);
 
   const handleIncrease = () => setQuantity(prev => prev + 1);
   const handleDecrease = () => setQuantity(prev => Math.max(1, prev - 1));
   const handleSeriesSClick = () => {
     setSelectedConsole(prev => (prev === 'X' ? 'S' : 'X'));
+    setSelectedImages(prev => (prev === xboxSeriesXImages ? xboxSeriesSImages : xboxSeriesXImages));
   };
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -146,7 +172,7 @@ function ProductPage() {
             minWidth: isDesktop ? 500 : 'auto'
           }}
         >
-          <ImageCarousel />
+          <ImageCarousel selectedImages={selectedImages} />
         </Box>
 
       </Box>

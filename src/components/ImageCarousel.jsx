@@ -1,12 +1,10 @@
-import React, { useState, useRef } from 'react';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import frontXbox from '../assets/productImages/frontXbox.png';
-import backXbox from '../assets/productImages/backXbox.png';
-import fullXbox from '../assets/productImages/fullXbox.png';
-import xboxBlackBox from '../assets/productImages/xboxBlackBox.png';
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 
 // MUI components
 import { useTheme } from '@mui/material/styles';
@@ -27,17 +25,11 @@ import {
 import Slider from 'react-slick';
 import { getCarouselDotGap, getCarouselDotWidth } from './helpers';
 
-const images = [
-  { imgPath: frontXbox, alt: 'XboxFront' },
-  { imgPath: fullXbox, alt: 'XboxPart' },
-  { imgPath: backXbox, alt: 'XboxBack' },
-  { imgPath: xboxBlackBox, alt: 'XboxBlackBox' },
-];
-
-export default function ImageCarousel() {
+function ImageCarousel({ selectedImages }) {
   const theme = useTheme();
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
@@ -105,7 +97,7 @@ export default function ImageCarousel() {
             border: '1px solid rgba(0,0,0,0.2)',
             transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
-              backgroundColor: '#7fe62a', // Solid green on hover
+              backgroundColor: 'rgb(40, 215, 40)', // Solid green on hover
               boxShadow: '0 0 0 4px rgba(127, 230, 42, 0.3)', // Glow effect
               transform: 'translateY(-50%) scale(1.1)'
             },
@@ -127,7 +119,7 @@ export default function ImageCarousel() {
           height: '100%',
         }}>
           <Slider ref={sliderRef} {...settings}>
-            {images.map((image, index) => (
+            {selectedImages.map((image, index) => (
               <div key={index}>
                 <CardActionArea
                   sx={{
@@ -184,7 +176,7 @@ export default function ImageCarousel() {
             border: '1px solid rgba(0,0,0,0.2)',
             transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
-              backgroundColor: '#7fe62a', // Solid green on hover
+              backgroundColor: 'rgb(40, 215, 40)', // Solid green on hover
               boxShadow: '0 0 0 4px rgba(127, 230, 42, 0.3)', // Glow effect
               transform: 'translateY(-50%) scale(1.1)'
             },
@@ -210,7 +202,7 @@ export default function ImageCarousel() {
         gap: getCarouselDotGap(isMobile, isTablet),
         height: isMobile ? 12 : 16
       }}>
-        {images.map((_, index) => (
+        {selectedImages.map((_, index) => (
           <Box
             key={index}
             onClick={() => goToSlide(index)}
@@ -236,3 +228,9 @@ export default function ImageCarousel() {
     </Box>
   );
 }
+
+ImageCarousel.propTypes = {
+  selectedImages: PropTypes.object.isRequired,
+};
+
+export default ImageCarousel;
