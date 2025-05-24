@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import {
   Modal,
@@ -9,7 +11,9 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-const ModalPaymentComponent = ({ open, onClose, productInfo }) => {
+const ModalPaymentComponent = ({ open, onClose }) => {
+  const { currentTransaction } = useSelector(state => state.transactions);
+
   return (
     <Modal
       open={open}
@@ -49,7 +53,7 @@ const ModalPaymentComponent = ({ open, onClose, productInfo }) => {
             Total Amount
           </Typography>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            ${productInfo.price || '0.00'}
+            ${currentTransaction?.amount || '0.00'}
           </Typography>
         </Box>
 
@@ -65,7 +69,6 @@ const ModalPaymentComponent = ({ open, onClose, productInfo }) => {
 ModalPaymentComponent.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  productInfo: PropTypes.object.isRequired,
 };
 
 export default ModalPaymentComponent;

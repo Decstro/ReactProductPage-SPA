@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+
 import { useTheme } from '@mui/material/styles';
 import {
   Backdrop,
@@ -11,8 +13,9 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-const BackdropPaymentComponent = ({ open, onClose, productInfo }) => {
+const BackdropPaymentComponent = ({ open, onClose }) => {
   const theme = useTheme();
+  const { currentTransaction } = useSelector(state => state.transactions);
 
   return (
     <Backdrop
@@ -58,7 +61,7 @@ const BackdropPaymentComponent = ({ open, onClose, productInfo }) => {
               Total Amount
             </Typography>
             <Typography variant="h4" fontWeight="bold" color="primary">
-              ${productInfo.price || '0.00'}
+              ${currentTransaction?.amount || '0.00'}
             </Typography>
           </Box>
 
@@ -75,7 +78,6 @@ const BackdropPaymentComponent = ({ open, onClose, productInfo }) => {
 BackdropPaymentComponent.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  productInfo: PropTypes.object.isRequired,
 };
 
 export default BackdropPaymentComponent;

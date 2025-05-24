@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setSelectedProduct, updateProductImages } from '../redux/product/productSlice';
+import { startTransaction } from '../redux/transaction/transactionSlice';
 
 // MUI components
 import {
@@ -46,28 +50,51 @@ const xboxSeriesSImages = [
 
 function ProductPage() {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { items: products } = useSelector(state => state.products);
+
+  // Local component state
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [productInfo, setProductInfo] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [selectedConsole, setSelectedConsole] = useState('X');
-  const [selectedImages, setSelectedImages] = useState(xboxSeriesXImages);
+
+  const selectedImages = selectedConsole === 'X' ? xboxSeriesXImages : xboxSeriesSImages;
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleIncrease = () => setQuantity(prev => prev + 1);
   const handleDecrease = () => setQuantity(prev => Math.max(1, prev - 1));
+
+  useEffect(() => {
+    dispatch(updateProductImages({
+      productId: 'xbox-series-x',
+      images: xboxSeriesXImages
+    }));
+    dispatch(updateProductImages({
+      productId: 'xbox-series-s',
+      images: xboxSeriesSImages
+    }));
+  }, [dispatch]);
+
   const handleSeriesSClick = () => {
-    setSelectedConsole(prev => (prev === 'X' ? 'S' : 'X'));
-    setSelectedImages(selectedConsole === 'X' ? xboxSeriesSImages : xboxSeriesXImages);
+    const newConsole = selectedConsole === 'X' ? 'S' : 'X';
+    setSelectedConsole(newConsole);
+
+    // Optional: Sync with Redux
+    const product = products.find(p => p.id === `xbox-series-${newConsole.toLowerCase()}`);
+    if (product) {
+      dispatch(setSelectedProduct(product));
+    }
   };
 
   const handlePayment = (totalAmount) => {
-    setProductInfo({
-      console: selectedConsole,
+    dispatch(startTransaction({
+      productId: `xbox-series-${selectedConsole.toLowerCase()}`,
       quantity,
-      price: totalAmount,
-    });
+      amount: totalAmount,
+      date: new Date().toISOString()
+    }));
     setIsPaymentOpen(true);
   };
 
@@ -505,7 +532,6 @@ function ProductPage() {
         isDesktop={isDesktop}
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
-        productInfo={productInfo}
       />
     </>
   );
