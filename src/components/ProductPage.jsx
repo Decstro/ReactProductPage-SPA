@@ -23,7 +23,10 @@ function ProductPage() {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: isMobile ? 2 : 4, paddingBottom: 4, paddingLeft: 0, paddingRight: 0 }}>
+    <Container
+      maxWidth="xl"
+      sx={{ paddingTop: isMobile ? 2 : 4, paddingBottom: 4, paddingLeft: 0, paddingRight: 0 }}
+    >
       <Box display="flex" flexDirection="column" gap={3}>
         {/* Title */}
         <Box textAlign="left">
@@ -59,7 +62,6 @@ function ProductPage() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: isMobile ? 400 : 700,
             bgcolor: 'transparent',
             p: 1 // Adds breathing room
           }}

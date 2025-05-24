@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   AppBar, Toolbar, Box, IconButton, useMediaQuery, useTheme, Typography,
 } from '@mui/material';
@@ -62,7 +63,7 @@ function Header() {
           }}
         >
           <MenuIcon
-            fontSize={isDesktop ? "medium" : "small"}
+            fontSize={isDesktop ? "large" : "medium"}
             sx={{
               transition: 'all 0.3s ease',
             }}
@@ -148,7 +149,7 @@ function Header() {
             }}
           >
             <SearchIcon
-              fontSize={isTablet ? "small" : "medium"}
+              fontSize={isTablet ? "medium" : "large"}
               sx={{
                 transition: 'all 0.3s ease',
               }}
