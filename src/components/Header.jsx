@@ -45,8 +45,28 @@ function Header() {
     >
       <Toolbar variant="dense" sx={{ height: '100%', px: isMobile ? 1 : 3 }}>
         {/* Menu Button (Always visible) */}
-        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          <MenuIcon fontSize={isDesktop ? "medium" : "small"} />
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{
+            mr: 2,
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              '& .MuiSvgIcon-root': {
+                filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) brightness(1.2)',
+                transform: 'scale(1.1)'
+              }
+            }
+          }}
+        >
+          <MenuIcon
+            fontSize={isDesktop ? "medium" : "small"}
+            sx={{
+              transition: 'all 0.3s ease',
+            }}
+          />
         </IconButton>
 
         {/* Microsoft Logo (Tablet+) */}
@@ -75,8 +95,30 @@ function Header() {
                   fontWeight: 500,
                   letterSpacing: '0.5px',
                   cursor: 'pointer',
+                  position: 'relative',
+                  padding: '4px 8px',
+                  transition: 'all 0.3s ease',
                   '&:hover': {
-                    color: '#107C10'
+                    color: '#107C10',
+                    textShadow: '0 0 8px rgba(16, 124, 16, 0.5)',
+                    boxShadow: '0 0 12px rgba(16, 124, 16, 0.3)',
+                    transform: 'translateY(-2px)',
+                    backgroundColor: 'rgba(16, 124, 16, 0.05)',
+                    borderRadius: '4px'
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: '50%',
+                    width: 0,
+                    height: '2px',
+                    backgroundColor: '#107C10',
+                    transition: 'all 0.3s ease',
+                    transform: 'translateX(-50%)'
+                  },
+                  '&:hover::after': {
+                    width: '80%'
                   }
                 }}
               >
@@ -91,8 +133,26 @@ function Header() {
 
         {/* Search Icon (Tablet+) */}
         {!isMobile && (
-          <IconButton color="inherit" sx={{ mr: isDesktop ? 2 : 1 }}>
-            <SearchIcon fontSize={isTablet ? "small" : "medium"} />
+          <IconButton
+            color="inherit"
+            sx={{
+              mr: isDesktop ? 2 : 1,
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                '& .MuiSvgIcon-root': {
+                  filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) brightness(1.2)',
+                  transform: 'scale(1.1)'
+                }
+              }
+            }}
+          >
+            <SearchIcon
+              fontSize={isTablet ? "small" : "medium"}
+              sx={{
+                transition: 'all 0.3s ease',
+              }}
+            />
           </IconButton>
         )}
 
@@ -103,9 +163,16 @@ function Header() {
           alt="Xbox"
           sx={{
             height: getLogoHeigth(isMobile, isTablet),
-            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.8))'
+            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.8))',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer',
+            '&:hover': {
+              filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.8)) brightness(1.2)',
+              transform: 'scale(1.05)'
+            }
           }}
         />
+
       </Toolbar>
     </AppBar>
   );

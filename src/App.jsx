@@ -9,7 +9,7 @@ function App() {
     <div className="app-container">
       <Header />
       <main style={{ display: 'flex', justifyContent: 'center' }}>
-        <Box width="100%" maxWidth="1280px">
+        <Box width="100%">
           <ProductPage />
         </Box>
       </main>
