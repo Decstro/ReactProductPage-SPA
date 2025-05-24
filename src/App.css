@@ -30,8 +30,6 @@ main {
   flex: 1;
   padding-top: max(var(--header-height), var(--header-min-height));
   padding-bottom: max(var(--footer-height), var(--footer-min-height));
-  padding-left: 5vw;
-  padding-right: 5vw;
   width: 100vw;
   box-sizing: border-box;
 }

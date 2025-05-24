@@ -1,39 +1,17 @@
-import { useState } from 'react';
-
 // MUI components
 import {
   Grid,
   Card,
-  CardContent,
   Typography,
   Box,
-  IconButton,
-  Button,
-  Rating,
-  Avatar,
   Container,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 
-// MUI icons
-import { Add, Remove } from '@mui/icons-material';
-
 // Components
-import Slider from 'react-slick';
 import ImageCarousel from './ImageCarousel';
 
-// Images
-const images = [
-  'https://source.unsplash.com/random/800x600?product-1',
-  'https://source.unsplash.com/random/800x600?product-2',
-  'https://source.unsplash.com/random/800x600?product-3',
-  'https://source.unsplash.com/random/800x600?product-4',
-  'https://source.unsplash.com/random/800x600?product-5',
-];
-
-// Colors
-const colors = ['#222', '#c00', '#0a0', '#09c'];
 
 function ProductPage() {
   const theme = useTheme();
@@ -43,16 +21,13 @@ function ProductPage() {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="xl" sx={{ paddingTop: isMobile ? 2 : 4, paddingBottom: 4, paddingLeft: 0, paddingRight: 0 }}>
       {isMobile && (
         <Box display="flex" flexDirection="column" gap={3}>
           {/* Title */}
           <Box textAlign="left">
-            <Typography variant="h4" fontWeight="bold">
-              Product Title
-            </Typography>
-            <Typography variant="h6">
-              Subtitle goes here
+            <Typography variant="h5" fontWeight="bold">
+              Xbox Series X/S
             </Typography>
           </Box>
 
@@ -102,7 +77,7 @@ function ProductPage() {
               </Box>
               
               <ImageCarousel />
-              
+
               {/* Optional footer */}
               <Box sx={{
                 bgcolor: 'grey.200',

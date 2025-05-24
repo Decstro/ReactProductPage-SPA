@@ -1,7 +1,6 @@
 import './App.css';
 import Header from './components/Header';
 import ProductPage from './components/ProductPage';
-import Footer from './components/Footer';
 
 import { Box } from '@mui/material';
 
@@ -14,7 +13,6 @@ function App() {
           <ProductPage />
         </Box>
       </main>
-      <Footer />
     </div>
   );
 }
