@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // MUI components
 import {
-  Grid,
-  Card,
   Typography,
   Box,
   Container,
   useMediaQuery,
   useTheme,
+  Button,
+  IconButton,
+  Rating,
 } from '@mui/material';
+
+
+import { Add, Remove } from '@mui/icons-material';
 
 // Components
 import ImageCarousel from './ImageCarousel';
@@ -17,44 +21,118 @@ import ImageCarousel from './ImageCarousel';
 
 function ProductPage() {
   const theme = useTheme();
+  const [quantity, setQuantity] = useState(1);
+  const [selectedConsole, setSelectedConsole] = useState('X');
+
+  const handleIncrease = () => setQuantity(prev => prev + 1);
+  const handleDecrease = () => setQuantity(prev => Math.max(1, prev - 1));
+  const handleSeriesSClick = () => {
+    setSelectedConsole(prev => (prev === 'X' ? 'S' : 'X'));
+  };
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <Container
       maxWidth="xl"
-      sx={{ paddingTop: isMobile ? 2 : 4, paddingBottom: 4, paddingLeft: 0, paddingRight: 0 }}
+      sx={{
+        py: 4,
+        px: isMobile ? 0 : 4,
+      }}
     >
-      <Box display="flex" flexDirection="column" gap={3}>
-        {/* Title */}
-        <Box textAlign="left">
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-            fontSize={20}
-            style={{
-              marginLeft: 15,
-              cursor: 'pointer',
-              display: 'inline-block',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              transition: 'all 0.3s ease'
-            }}
+      {/* Title */}
+      {
+        !isDesktop && (
+          <Box textAlign="left" ml={2}>
+            <Box
+              sx={{
+                display: 'inline-block',
+                cursor: 'pointer',
+                padding: '4px 8px',
+                borderRadius: '4px',
+              }}
+            >
+              <Typography variant="h4" fontWeight="bold" color="#ffffff">
+                Xbox Series X/S
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{ fontSize: 20 }}
+                color="#ffffff"
+              >
+                Power your dreams
+              </Typography>
+            </Box>
+          </Box>
+
+        )
+      }
+
+      {/* Main Content */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: isDesktop ? 'row' : 'column',
+          gap: isDesktop ? 6 : 3,
+          alignItems: 'center'
+        }}
+      >
+        {/* Xbox Text - Only shows on desktop */}
+        {isDesktop && (
+          <Box
             sx={{
-              '&:hover': {
-                color: '#ffffff', // White color
-                textShadow: '0 0 8px rgba(255, 255, 255, 0.6)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                transform: 'translateY(-2px) scale(1.02)'
-              }
+              width: '40%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              gap: 2,
             }}
           >
-              Xbox Series X/S
-          </Typography>
-        </Box>
+            {/* TITLE */}
+            <Typography
+              textAlign="left"
+              variant="h1"
+              sx={{
+                fontFamily: '"Segoe UI Black", "Arial Black", "Montserrat ExtraBold", sans-serif',
+                fontSize: '4.5rem',
+                fontWeight: 900,
+                lineHeight: 1.1,
+                color: '#ffffff',
+                whiteSpace: 'pre-line', // supports multi-line if needed
+              }}
+            >
+              XBOX{'\n'}SERIES X
+            </Typography>
 
+            {/* GREEN ACCENT BAR */}
+            <Box
+              sx={{
+                width: '60px',
+                height: '10px',
+                backgroundColor: '#7fe62a', // approximate Xbox green
+                transform: 'skew(-30deg)',
+                mb: 1,
+              }}
+            />
+
+            {/* SUBTITLE */}
+            <Typography
+              variant="h5"
+              sx={{
+                fontFamily: '"Segoe UI", sans-serif',
+                fontWeight: 600,
+                color: '#ffffff',
+                fontSize: 'Z.5rem',
+              }}
+            >
+              Power your dreams
+            </Typography>
+          </Box>
+
+        )}
 
         {/* Carousel */}
         <Box
@@ -63,15 +141,281 @@ function ProductPage() {
             justifyContent: 'center',
             alignItems: 'center',
             bgcolor: 'transparent',
-            p: 1 // Adds breathing room
+            p: 1, // Adds breathing room
+            width: isDesktop ? '60%' : '100%',
+            minWidth: isDesktop ? 500 : 'auto'
           }}
         >
           <ImageCarousel />
         </Box>
 
-        {/* Info + Card */}
-        <Box bgcolor="#ddd" height={270}>[Extra Card]</Box>
       </Box>
+
+      {/* Info Card (Mobile/Tablet) */}
+      {!isDesktop && (
+        <Box
+          sx={{
+            cursor: 'pointer',
+            borderRadius: 2,
+            p: 3,
+            mt: 3,
+            bgcolor: 'rgba(30, 30, 30, 0.85)', // Dark grey with opacity
+            backdropFilter: 'blur(8px)',
+            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.5)', // Single strong shadow
+            border: '2px solid rgba(220, 220, 220, 0.4)', // Light gray border
+            position: 'relative',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)', // Stronger shadow on hover
+              borderColor: 'rgba(220, 220, 220, 0.7)', // Brighter border on hover
+              transform: 'translateY(-2px)'
+            },
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.01))',
+          }}>
+
+          {/* Product Title */}
+          <Box mb={2}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <Box component="span" sx={{ color: '#fff', mr: 1 }}>
+                Xbox
+              </Box>
+              <Box component="span" sx={{ color: 'rgb(40, 201, 40)' }}>
+                Series X/S
+              </Box>
+            </Typography>
+          </Box>
+
+          {/* Rating - Xbox Green Stars */}
+          <Box display="flex" alignItems="center" mb={2}>
+            <Rating
+              value={4.5}
+              precision={0.5}
+              readOnly
+              sx={{
+                '& .MuiRating-iconFilled': {
+                  color: 'rgb(40, 201, 40)', // Xbox green for filled stars
+                },
+                '& .MuiRating-iconHover': {
+                  color: '#0e6b0e', // Darker green on hover
+                },
+                '& .MuiRating-iconEmpty': {
+                  color: 'rgba(16, 124, 16, 0.3)', // Light green outline
+                }
+              }}
+            />
+            <Typography variant="body2" color="#fff" ml={1}>
+              59 Ratings | (1,234 reviews)
+            </Typography>
+          </Box>
+
+          {/* Description */}
+          <Typography
+            fontSize={18}
+            color="#fff"
+            fontWeight="bold"
+            mb={3}
+            align="left" // Align text to the left
+            sx={{
+              textAlign: 'left', // Additional styling for left alignment
+              textJustify: 'inter-word' // Improves text spacing when justified
+            }}
+          >
+            Experience next-gen gaming with Xbox Series X/S. Enjoy up to 4K
+            at 120 FPS or 1440p digital gaming, faster load times, and backward compatibility.
+          </Typography>
+
+          {/* Series Selection */}
+          <Box mb={3}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              mb={1}
+              sx={{ color: 'rgb(40, 201, 40)', textAlign: 'left' }}
+            >
+              Version
+            </Typography>
+
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              {/* Left side: Series selection */}
+
+              <Box display="flex" alignItems="center" gap={2}>
+                {/* Series X Option */}
+                <Box
+                  sx={{
+                    width: 100,
+                    height: 40,
+                    borderRadius: '20px',
+                    backgroundColor: selectedConsole === 'X' ? '#0e6b0e' : '#000',
+                    border: '2px solid #333',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      transform: 'translateY(-3px)',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                      borderColor: '#107C10'
+                    },
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '2px',
+                      backgroundColor: '#107C10',
+                      opacity: 0,
+                      transition: 'opacity 0.2s ease'
+                    },
+                    '&:hover::before': {
+                      opacity: 1
+                    }
+                  }}
+                  onClick={handleSeriesSClick}
+                >
+                  <Typography
+                    variant="body2"
+                    fontWeight="bold"
+                    color="white"
+                    sx={{ zIndex: 1 }}
+                  >
+                    Series X
+                  </Typography>
+                </Box>
+
+                {/* Series S Option */}
+                <Box
+                  sx={{
+                    width: 100,
+                    height: 40,
+                    borderRadius: '20px',
+                    backgroundColor: selectedConsole === 'S' ? '#0e6b0e' : '#fff',
+                    border: '2px solid #8f8d8d',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      transform: 'translateY(-3px)',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                      borderColor: '#12b512'
+                    },
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '2px',
+                      backgroundColor: '#12b512',
+                      opacity: 0,
+                      transition: 'opacity 0.2s ease'
+                    },
+                    '&:hover::before': {
+                      opacity: 1
+                    }
+                  }}
+                  onClick={handleSeriesSClick}
+                >
+                  <Typography
+                    variant="body2"
+                    fontWeight="bold"
+                    color={selectedConsole === 'S' ? '#fff' : '#000'}
+                    sx={{ zIndex: 1 }}
+                  >
+                    Series S
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Right side: Quantity Selector */}
+              <Box
+                display="flex"
+                alignItems="center"
+                border="1px solid #0e6b0e" // Darker green border
+                borderRadius="12px"
+                px={1.5}
+                py={0.5}
+                sx={{
+                  backgroundColor: 'rgb(34, 164, 34)', // 15% opacity of #0e6b0e
+                  boxShadow: '0 0 8px rgb(40, 201, 40)', // Stronger shadow
+                  width: 'fit-content' // Ensures compact sizing
+                }}
+              >
+                <IconButton
+                  size="small"
+                  onClick={handleDecrease}
+                  sx={{
+                    color: 'white',
+                    backgroundColor: 'rgb(34, 164, 34)', // Dark green
+                    '&:hover': {
+                      transform: 'scale(1.3)', // Slightly larger on hover
+                      backgroundColor: 'rgb(34, 164, 34)',
+                    },
+                    width: 32, // Slightly larger buttons
+                    height: 32,
+                    borderRadius: '8px' // More rounded corners
+                  }}
+                >
+                  <Remove fontSize="small" />
+                </IconButton>
+
+                <Typography
+                  mx={3} // More horizontal spacing
+                  fontWeight="bold"
+                  fontSize={22} // Larger number
+                  color="white"
+                >
+                  {quantity}
+                </Typography>
+
+                <IconButton
+                  size="small"
+                  onClick={handleIncrease}
+                  sx={{
+                    color: 'white',
+                    backgroundColor: 'rgb(34, 164, 34)',
+                    '&:hover': {
+                      transform: 'scale(1.3)', // Slightly larger on hover
+                      backgroundColor: 'rgb(34, 164, 34)',
+                    },
+                    width: 32,
+                    height: 32,
+                    borderRadius: '8px'
+                  }}
+                >
+                  <Add fontSize="small" />
+                </IconButton>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Pay */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            sx={{
+              bgcolor: '#107C10',
+              py: 1.5,
+              '&:hover': { bgcolor: '#0e6b0e' },
+              fontWeight: 'bold'
+            }}
+          >
+            Buy
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 }

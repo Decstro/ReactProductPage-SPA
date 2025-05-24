@@ -41,6 +41,7 @@ export default function ImageCarousel() {
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
@@ -50,11 +51,11 @@ export default function ImageCarousel() {
   const settings = {
     dots: false, // We'll implement custom dots
     infinite: true,
-    speed: 500,
+    speed: 50,
     slidesToShow: 1,
     slidesToScroll: 1,
     fade: true, // Use fade transition instead of sliding
-    cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+    cssEase: 'ease-out',
     beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
@@ -86,21 +87,30 @@ export default function ImageCarousel() {
         aspectRatio: '16/9', // Maintain aspect ratio
         width: '100%',
         background: 'transparent', // Truly transparent
+        transition: 'none'
       }}>
         {/* Custom Previous Arrow */}
         <IconButton
           sx={{
             position: 'absolute',
-            left: isMobile ? 4 : 10,
+            left: isDesktop ? 80 : 60, // Position at the edge of the image
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 2,
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            color: 'black', // Black icon for contrast
+            backgroundColor: 'rgba(237, 241, 234, 0.8)', // #7fe62a with 80% opacity
             width: isMobile ? 32 : 40,
             height: isMobile ? 32 : 40,
+            borderRadius: '50%',
+            border: '1px solid rgba(0,0,0,0.2)',
+            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
-              backgroundColor: 'rgba(0,0,0,0.7)'
+              backgroundColor: '#7fe62a', // Solid green on hover
+              boxShadow: '0 0 0 4px rgba(127, 230, 42, 0.3)', // Glow effect
+              transform: 'translateY(-50%) scale(1.1)'
+            },
+            '& .MuiSvgIcon-root': {
+              filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.3))' // Icon shadow
             }
           }}
           onClick={() => sliderRef.current.slickPrev()}
@@ -119,14 +129,33 @@ export default function ImageCarousel() {
           <Slider ref={sliderRef} {...settings}>
             {images.map((image, index) => (
               <div key={index}>
-                <CardActionArea>
+                <CardActionArea
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'transparent'
+                    },
+                    '&:focus': {
+                      outline: 'none'
+                    },
+                    '& .MuiCardActionArea-focusHighlight': {
+                      display: 'none'
+                    },
+                    '& .MuiTouchRipple-root': {
+                      display: 'none'
+                    }
+                  }}
+                >
                   <CardMedia
                     component="img"
                     sx={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'scale-down',
-                      aspectRatio: '16/9'
+                      aspectRatio: '16/9',
+                      transition: 'none', // Disable any transitions
+                      '&:hover': {
+                        transform: 'none' // Disable any hover effects
+                      }
                     }}
                     image={image.imgPath}
                     alt={image.alt}
@@ -143,16 +172,24 @@ export default function ImageCarousel() {
         <IconButton
           sx={{
             position: 'absolute',
-            right: isMobile ? 4 : 10,
+            right: isDesktop ? 80 : 60,  // Position at the edge of the image
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 2,
-            color: 'white',
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            color: 'black', // Black icon for contrast
+            backgroundColor: 'rgba(237, 241, 234, 0.8)', // #7fe62a with 80% opacity
             width: isMobile ? 32 : 40,
             height: isMobile ? 32 : 40,
+            borderRadius: '50%',
+            border: '1px solid rgba(0,0,0,0.2)',
+            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
-              backgroundColor: 'rgba(0,0,0,0.7)'
+              backgroundColor: '#7fe62a', // Solid green on hover
+              boxShadow: '0 0 0 4px rgba(127, 230, 42, 0.3)', // Glow effect
+              transform: 'translateY(-50%) scale(1.1)'
+            },
+            '& .MuiSvgIcon-root': {
+              filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.3))' // Icon shadow
             }
           }}
           onClick={() => sliderRef.current.slickNext()}
