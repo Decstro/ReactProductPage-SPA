@@ -59,9 +59,9 @@ function ProductPage() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: 400,
+            height: isMobile ? 400 : 700,
             bgcolor: 'transparent',
-            p: 3 // Adds breathing room
+            p: 1 // Adds breathing room
           }}
         >
           <ImageCarousel />
