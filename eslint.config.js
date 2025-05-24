@@ -21,46 +21,41 @@ export default [
         ...globals.browser,
         ...globals.node,
       },
-      plugins: {
-        'react': react,
-        'react-hooks': reactHooks,
-        'react-refresh': reactRefresh,
-      },
-      rules: {
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    // I need to add the rules for indentation
+    rules: {
       // ✅ Base ESLint rules
-        ...js.configs.recommended.rules,
+      ...js.configs.recommended.rules,
 
-        // ✅ React rules
-        ...react.configs.recommended.rules,
+      // ✅ React Hooks rules
+      ...reactHooks.configs.recommended.rules,
 
-        // ✅ React Hooks rules
-        ...reactHooks.configs.recommended.rules,
+      // ✅ Optional: Prettier (disables formatting rules to avoid conflicts)
+      ...prettier.rules,
 
-        // ✅ Optional: Prettier (disables formatting rules to avoid conflicts)
-        ...prettier.rules,
+      // ✅ Custom rules
+      'indent': ["error", 2],
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'prefer-template': 'warn',
+      'no-useless-concat': 'warn',
+      'template-curly-spacing': ['error', 'never'],
+      'semi': ['error', 'always'],
+      // Disallow trailing spaces
+      'no-trailing-spaces': 'error',
 
-        // ✅ Custom rules
-        'indent': ["error", 2],
-        'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }],
-        'react/prop-types': 'off',
-        'react/react-in-jsx-scope': 'off',
-        'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-        'prefer-template': 'warn',
-        'no-useless-concat': 'warn',
-        'template-curly-spacing': ['error', 'never'],
-        'semi': ['error', 'always'],
-        // Disallow trailing spaces
-        'no-trailing-spaces': 'error',
+      // Enforce a maximum line length (e.g., 100 characters)
+      'max-len': ['warn', { code: 100, tabWidth: 2, ignoreUrls: true }],
 
-        // Enforce a maximum line length (e.g., 100 characters)
-        'max-len': ['warn', { code: 100, tabWidth: 2, ignoreUrls: true }],
+      // Disallow nested ternary expressions
+      'no-nested-ternary': 'error',
 
-        // Disallow nested ternary expressions
-        'no-nested-ternary': 'error',
-
-        // Enforce a newline at the end of files
-        'eol-last': ['error', 'always'],
-      },
+      // Enforce a newline at the end of files
+      'eol-last': ['error', 'always'],
     },
   },
 ];
