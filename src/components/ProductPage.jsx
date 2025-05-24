@@ -152,7 +152,7 @@ function ProductPage() {
                 sx={{
                   width: '60px',
                   height: '10px',
-                  backgroundColor: '#7fe62a', // approximate Xbox green
+                  backgroundColor: 'rgb(40, 201, 40)', // approximate Xbox green
                   transform: 'skew(-30deg)',
                   mb: 1,
                 }}

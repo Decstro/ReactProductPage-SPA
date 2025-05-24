@@ -100,7 +100,7 @@ function Header() {
                   padding: '4px 8px',
                   transition: 'all 0.3s ease',
                   '&:hover': {
-                    color: '#107C10',
+                    color: 'rgb(40, 201, 40)',
                     textShadow: '0 0 8px rgba(16, 124, 16, 0.5)',
                     boxShadow: '0 0 12px rgba(16, 124, 16, 0.3)',
                     transform: 'translateY(-2px)',
