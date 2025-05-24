@@ -20,11 +20,69 @@ export const getMinnHeight = (isMobile, isTablet) => {
 
 export const getLogoHeigth = (isMobile, isTablet) => {
   if (isMobile) {
-    return 22;
-  } else if (isTablet) {
     return 24;
-  } else {
+  } else if (isTablet) {
     return 28;
+  } else {
+    return 32;
   }
 };
 
+export const getMaxWidthCarousel = (isMobile, isTablet) => {
+  if (isMobile) {
+    return '100%';
+  } else if (isTablet) {
+    return '90%';
+  } else {
+    return '80%';
+  }
+};
+
+export const getImageContainerHeigth = (isMobile, isTablet) => {
+  if (isMobile) {
+    return 220;
+  } else if (isTablet) {
+    return 280;
+  } else {
+    return 350;
+  }
+};
+
+export const getCarouselArrowSize = (isMobile, isTablet) => {
+  if (isMobile) {
+    return 38;
+  } else if (isTablet) {
+    return 48;
+  } else {
+    return 56;
+  }
+};
+export const getCarouselDotGap = (isMobile, isTablet) => {
+  if (isMobile) {
+    return 1.5;
+  } else if (isTablet) {
+    return 2;
+  } else {
+    return 3;
+  }
+};
+
+export const getCarouselDotWidth = (isMobile, isTablet, condition) => {
+  if (condition) {
+    if (isMobile) {
+      return 20;
+    } else if (isTablet) {
+      return 24;
+    } else {
+      return 28;
+    }
+  } else {
+    if (isMobile) {
+      return 10;
+    } else if (isTablet) {
+      return 12;
+    } else {
+      return 16;
+    }
+  }
+};
