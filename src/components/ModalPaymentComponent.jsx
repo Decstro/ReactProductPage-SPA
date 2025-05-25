@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import {
@@ -10,9 +9,10 @@ import {
   Divider
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
+import PaymentForm from './PaymentForm.jsx';
+
 
 const ModalPaymentComponent = ({ open, onClose }) => {
-  const { currentTransaction } = useSelector(state => state.transactions);
 
   return (
     <Modal
@@ -28,7 +28,7 @@ const ModalPaymentComponent = ({ open, onClose }) => {
     >
       <Box
         sx={{
-          width: 500,
+          width: { xs: '90%', sm: '80%', md: '70%', lg: '60%' },
           bgcolor: 'background.paper',
           borderRadius: 2,
           p: 4,
@@ -37,30 +37,79 @@ const ModalPaymentComponent = ({ open, onClose }) => {
           maxWidth: '90%', // Responsive width
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h6" fontWeight="bold">
-            Payment Details
-          </Typography>
-          <IconButton onClick={onClose} edge="end" aria-label="close" size="small">
-            <CloseIcon />
-          </IconButton>
+        {/* Header with Xbox branding */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          mb={2} // Reduced bottom margin
+          sx={{
+            position: 'relative',
+          }}
+        >
+          {/* Header row with logo, title, and close button */}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            mb={1} // Reduced space between header row and subtitle
+            sx={{
+              position: 'relative',
+              width: '100%',
+            }}
+          >
+            {/* Xbox Icon (left) */}
+            <Box
+              component="img"
+              src="/src/assets/productImages/xboxLogoVerde.png"
+              alt="Xbox"
+              sx={{
+                width: 40,
+                height: 40,
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+              }}
+            />
+
+            {/* Title (center) */}
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              color="rgb(21, 158, 21)"
+              sx={{
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
+              }}
+            >
+              Payment Details
+            </Typography>
+
+            {/* Close button (right) */}
+            <IconButton
+              onClick={onClose}
+              edge="end"
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          <Divider sx={{ mb: 3 }} />
+
+          <Box mb={3}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textAlign: 'left', marginBottom: 1, fontSize: '17px' }}
+            >
+              You&#39;re almost there. Fill in your payment information
+              below to securely complete your order.
+            </Typography>
+
+            <Box mt={2} display="flex" flexDirection="column" alignItems="flex-start">
+              <PaymentForm />
+            </Box>
+          </Box>
         </Box>
-
-        <Divider sx={{ mb: 3 }} />
-
-        <Box mb={3}>
-          <Typography variant="body1" mb={1}>
-            Total Amount
-          </Typography>
-          <Typography variant="h4" fontWeight="bold" color="primary">
-            ${currentTransaction?.amount || '0.00'}
-          </Typography>
-        </Box>
-
-        <Typography variant="body1" align="center" py={4}>
-          Payment Form
-          {/* <PaymentForm onClose={onClose} /> */}
-        </Typography>
       </Box>
     </Modal>
   );
