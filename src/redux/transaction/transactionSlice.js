@@ -17,7 +17,7 @@ const transactionSlice = createSlice({
         createdAt: new Date().toISOString(),
         payment: null,
         shipping: null,
-        metadata: {} // For any additional data
+        metadata: {},
       };
     },
     updateTransaction: (state, action) => {

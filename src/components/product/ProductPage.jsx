@@ -33,6 +33,7 @@ import fullXboxSeriesS from '../../assets/productImages/fullXboxS.png';
 import xboxBlackBoxSeriesS from '../../assets/productImages/xboxBlackBoxS.png';
 
 import AdaptivePayment from '../payment/AdaptivePayment';
+import ClosePaymentAlert from './ClosePaymentAlert';
 
 const xboxSeriesXImages = [
   { imgPath: frontXboxSeriesX, alt: 'XboxFront' },
@@ -53,16 +54,28 @@ function ProductPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { items: products } = useSelector(state => state.products);
+  const { currentTransaction } = useSelector(state => state.transactions);
 
   // Local component state
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [selectedConsole, setSelectedConsole] = useState('X');
+  const [showCloseAlert, setShowCloseAlert] = useState(false);
+  // Initialize local state from persisted transaction
+  const [quantity, setQuantity] = useState(
+    currentTransaction?.quantity || 1
+  );
+  const [selectedConsole, setSelectedConsole] = useState(
+    currentTransaction?.productId?.split('-')[2]?.toUpperCase() || 'X'
+  );
+
 
   const selectedImages = selectedConsole === 'X' ? xboxSeriesXImages : xboxSeriesSImages;
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  // Calculate price based on selected console
+  const unitPrice = selectedConsole === 'X' ? 399.99 : 299.99;
+  const totalAmount = parseFloat((quantity * unitPrice).toFixed(2));
 
   const handleIncrease = () => setQuantity(prev => prev + 1);
   const handleDecrease = () => setQuantity(prev => Math.max(1, prev - 1));
@@ -78,15 +91,33 @@ function ProductPage() {
     }));
   }, [dispatch]);
 
+  useEffect(() => {
+    // Only reopen modal if transaction was incomplete
+    if (currentTransaction && currentTransaction.status === 'pending') {
+      setIsPaymentOpen(true);
+      setSelectedConsole(currentTransaction.productId.split('-')[2].toUpperCase());
+      setQuantity(currentTransaction.quantity);
+    }
+  }, [currentTransaction]);
+
   const handleSeriesSClick = () => {
     const newConsole = selectedConsole === 'X' ? 'S' : 'X';
     setSelectedConsole(newConsole);
+    setQuantity(1); // Reset quantity when switching consoles
 
     // Optional: Sync with Redux
     const product = products.find(p => p.id === `xbox-series-${newConsole.toLowerCase()}`);
     if (product) {
       dispatch(setSelectedProduct(product));
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowCloseAlert(true);
+  };
+
+  const handleConfirmClose = () => {
+    setIsPaymentOpen(false);
   };
 
   const handlePayment = (totalAmount) => {
@@ -477,7 +508,7 @@ function ProductPage() {
               flexDirection="column"
             >
               <Typography variant="h4" color="#fff" fontWeight="bold" mb={-0.5}>
-                ${parseFloat((quantity * (selectedConsole === 'X' ? 399.99 : 299.99)).toFixed(2))}
+                ${totalAmount}
               </Typography>
               <Typography variant="body1" color="#aaa">
                 Total Payable Amount
@@ -510,15 +541,7 @@ function ProductPage() {
                   fontSize: '1.1rem',
                   minHeight: '50px', // Ensure consistent height
                 }}
-                onClick={() => handlePayment(
-                  parseFloat(
-                    (
-                      quantity *
-                      (selectedConsole === 'X' ? 399.99 : 299.99)
-                    ).toFixed(2)
-                  )
-                )}
-
+                onClick={() => handlePayment(totalAmount)}
               >
                 Pay with credit card
               </Button>
@@ -532,7 +555,14 @@ function ProductPage() {
       <AdaptivePayment
         isDesktop={isDesktop}
         open={isPaymentOpen}
-        onClose={() => setIsPaymentOpen(false)}
+        onClose={handleCloseModal}
+      />
+
+      {/* Alert component */}
+      <ClosePaymentAlert
+        open={showCloseAlert}
+        onClose={() => setShowCloseAlert(false)}
+        onConfirm={handleConfirmClose}
       />
     </>
   );

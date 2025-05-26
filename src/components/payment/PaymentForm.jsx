@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateTransaction } from '../../redux/transaction/transactionSlice.js';
 import { number } from 'card-validator';
 import { validatePaymentForm } from './validations.js';
@@ -22,15 +22,18 @@ import CardTypeIcon from '../product/CardTypeIcon.jsx';
 
 const PaymentForm = () => {
   const dispatch = useDispatch();
-  const [cardType, setCardType] = useState(null);
+  const { currentTransaction } = useSelector(state => state.transactions);
+
+  // Initialize form state from persisted transaction
+  const [cardType, setCardType] = useState(currentTransaction?.payment?.cardType || null);
   const [formData, setFormData] = useState({
-    email: '',
+    email: currentTransaction?.shipping?.email || '',
     cardNumber: '',
-    expiry: '',
+    expiry: currentTransaction?.payment?.expiry || '',
     cvv: '',
     nameOnCard: '',
-    address: '',
-    country: 'US',
+    address: currentTransaction?.shipping?.address || '',
+    country: currentTransaction?.shipping?.country || 'US',
   });
 
   const [errors, setErrors] = useState({
@@ -41,6 +44,21 @@ const PaymentForm = () => {
     nameOnCard: '',
     address: '',
   });
+
+  // When transaction updates, sync relevant fields
+  useEffect(() => {
+    if (currentTransaction?.payment) {
+      setCardType(currentTransaction.payment.cardType);
+    }
+    if (currentTransaction?.shipping) {
+      setFormData(prev => ({
+        ...prev,
+        email: currentTransaction.shipping.email || prev.email,
+        address: currentTransaction.shipping.address || prev.address,
+        country: currentTransaction.shipping.country || prev.country
+      }));
+    }
+  }, [currentTransaction]);
 
   const handleCardChange = (e) => {
     const value = e.target.value;
@@ -371,7 +389,7 @@ const PaymentForm = () => {
         }}
       >
         <strong>
-          Continue
+          Continue - ${currentTransaction?.amount || '0.00'}
         </strong>
       </Button>
     </Box>
