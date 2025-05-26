@@ -3,13 +3,13 @@ import {
   AppBar, Toolbar, Box, IconButton, useMediaQuery, useTheme, Typography,
 } from '@mui/material';
 
-import  { getHeigth, getMinnHeight, getLogoHeigth } from './helpers';
+import  { getHeigth, getMinnHeight, getLogoHeigth } from '../utils/helpers';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-import xboxLogo from '../assets/productImages/xboxLogoBlanco.png';
-import microsoftLogo from '../assets/productImages/microsoftLogo.png';
+import xboxLogo from '../../assets/productImages/xboxLogoBlanco.png';
+import microsoftLogo from '../../assets/productImages/microsoftLogo.png';
 
 function Header() {
   const theme = useTheme();

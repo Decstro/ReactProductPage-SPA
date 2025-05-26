@@ -23,7 +23,7 @@ import {
 } from '@mui/icons-material';
 
 import Slider from 'react-slick';
-import { getCarouselDotGap, getCarouselDotWidth } from './helpers';
+import { getCarouselDotGap, getCarouselDotWidth } from '../utils/helpers';
 
 function ImageCarousel({ selectedImages }) {
   const theme = useTheme();

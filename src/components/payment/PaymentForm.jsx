@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateTransaction } from '../redux/transaction/transactionSlice';
+import { updateTransaction } from '../../redux/transaction/transactionSlice.js';
 import { number } from 'card-validator';
 import { validatePaymentForm } from './validations.js';
 
@@ -13,13 +13,12 @@ import {
   Typography,
   Divider,
   IconButton,
-  FormHelperText,
 } from '@mui/material';
 
 import EmailIcon from '@mui/icons-material/Email';
 import HomeIcon from '@mui/icons-material/Home';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import CardTypeIcon from './CardTypeIcon.jsx';
+import CardTypeIcon from '../product/CardTypeIcon.jsx';
 
 const PaymentForm = () => {
   const dispatch = useDispatch();
@@ -271,6 +270,14 @@ const PaymentForm = () => {
         value={formData.nameOnCard}
         onChange={handleChange}
         margin="normal"
+        sx={{
+          '& .MuiInputBase-input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 100px rgb(255, 255, 255) inset !important',
+            WebkitTextFillColor: '#050505 !important',
+            caretColor: '#050505',
+            borderRadius: 'inherit'
+          },
+        }}
         error={!!errors.nameOnCard}
         helperText={errors.nameOnCard}
       />

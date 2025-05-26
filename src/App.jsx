@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import Header from './components/Header';
-import ProductPage from './components/ProductPage';
+import Header from './components/layout/Header';
+import ProductPage from './components/product/ProductPage';
 
 import { Box } from '@mui/material';
 

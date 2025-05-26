@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSelectedProduct, updateProductImages } from '../redux/product/productSlice';
-import { startTransaction } from '../redux/transaction/transactionSlice';
+import { setSelectedProduct, updateProductImages } from '../../redux/product/productSlice';
+import { startTransaction } from '../../redux/transaction/transactionSlice';
 
 // MUI components
 import {
@@ -23,15 +23,16 @@ import { Add, Remove, ShoppingCart as CartIcon } from '@mui/icons-material';
 import ImageCarousel from './ImageCarousel';
 
 // Images
-import frontXboxSeriesX from '../assets/productImages/frontXbox.png';
-import backXboxSeriesX from '../assets/productImages/backXbox.png';
-import fullXboxSeriesX from '../assets/productImages/fullXbox.png';
-import xboxBlackBoxSeriesX from '../assets/productImages/xboxBlackBox.png';
-import frontXboxSeriesS from '../assets/productImages/frontXboxS.png';
-import backXboxSeriesS from '../assets/productImages/backXboxS.png';
-import fullXboxSeriesS from '../assets/productImages/fullXboxS.png';
-import xboxBlackBoxSeriesS from '../assets/productImages/xboxBlackBoxS.png';
-import AdaptivePayment from './AdaptivePayment';
+import frontXboxSeriesX from '../../assets/productImages/frontXbox.png';
+import backXboxSeriesX from '../../assets/productImages/backXbox.png';
+import fullXboxSeriesX from '../../assets/productImages/fullXbox.png';
+import xboxBlackBoxSeriesX from '../../assets/productImages/xboxBlackBox.png';
+import frontXboxSeriesS from '../../assets/productImages/frontXboxS.png';
+import backXboxSeriesS from '../../assets/productImages/backXboxS.png';
+import fullXboxSeriesS from '../../assets/productImages/fullXboxS.png';
+import xboxBlackBoxSeriesS from '../../assets/productImages/xboxBlackBoxS.png';
+
+import AdaptivePayment from '../payment/AdaptivePayment';
 
 const xboxSeriesXImages = [
   { imgPath: frontXboxSeriesX, alt: 'XboxFront' },

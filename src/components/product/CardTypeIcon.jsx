@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 
 // Images for card types
-import visaSvg from '../assets/cards/visa.svg';
-import mastercardSvg from '../assets/cards/mastercard.svg';
-import amexSvg from '../assets/cards/amex.svg';
-import discoverSvg from '../assets/cards/discover.svg';
-import dinersSvg from '../assets/cards/diners.svg';
-import jcbSvg from '../assets/cards/jcb.svg';
-import unionpaySvg from '../assets/cards/unionpay.svg';
-import maestroSvg from '../assets/cards/maestro.svg';
-import mirSvg from '../assets/cards/mir.svg';
-import eloSvg from '../assets/cards/elo.svg';
-import hiperSvg from '../assets/cards/hiper.svg';
-import hipercardSvg from '../assets/cards/hipercard.svg';
+import visaSvg from '../../assets/cards/visa.svg';
+import mastercardSvg from '../../assets/cards/mastercard.svg';
+import amexSvg from '../../assets/cards/amex.svg';
+import discoverSvg from '../../assets/cards/discover.svg';
+import dinersSvg from '../../assets/cards/diners.svg';
+import jcbSvg from '../../assets/cards/jcb.svg';
+import unionpaySvg from '../../assets/cards/unionpay.svg';
+import maestroSvg from '../../assets/cards/maestro.svg';
+import mirSvg from '../../assets/cards/mir.svg';
+import eloSvg from '../../assets/cards/elo.svg';
+import hiperSvg from '../../assets/cards/hiper.svg';
+import hipercardSvg from '../../assets/cards/hipercard.svg';
 
 
 const CardTypeIcon = ({ type }) => {
