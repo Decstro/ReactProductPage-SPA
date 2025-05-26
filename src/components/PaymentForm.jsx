@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTransaction } from '../redux/transaction/transactionSlice';
 import { number } from 'card-validator';
+import { validatePaymentForm } from './validations.js';
+
 import {
   Box,
   TextField,
@@ -18,6 +22,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CardTypeIcon from './CardTypeIcon.jsx';
 
 const PaymentForm = () => {
+  const dispatch = useDispatch();
   const [cardType, setCardType] = useState(null);
   const [formData, setFormData] = useState({
     email: '',
@@ -64,8 +69,29 @@ const PaymentForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Mock payment submitted:', { ...formData, cardType });
-    // Your mock submission logic here
+    const { isValid, errors: validationErrors } = validatePaymentForm(formData);
+    setErrors(validationErrors);
+
+    if (!isValid) {
+      // Focus first error field
+      const firstError = Object.keys(validationErrors)[0];
+      document.getElementById(firstError)?.focus();
+      return;
+    }
+
+    dispatch(updateTransaction({
+      payment: {
+        method: 'card',
+        cardType,
+        last4: formData.cardNumber.slice(-4), // Security best practice
+        expiry: formData.expiry
+      },
+      shipping: {
+        address: formData.address,
+        country: formData.country,
+        email: formData.email
+      },
+    }));
   };
 
 
@@ -85,7 +111,16 @@ const PaymentForm = () => {
         value={formData.email}
         onChange={handleChange}
         margin="normal"
-        required
+        error={!!errors.email}
+        helperText={errors.email}
+        sx={{
+          '& .MuiInputBase-input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 100px rgb(255, 255, 255) inset !important',
+            WebkitTextFillColor: '#050505 !important',
+            caretColor: '#050505',
+            borderRadius: 'inherit'
+          },
+        }}
         slotProps={{
           input: {
             endAdornment: (
@@ -119,7 +154,6 @@ const PaymentForm = () => {
           Card Information
         </Typography>
         <Divider sx={{  flex: 1, height: 1, backgroundColor: 'rgb(145, 192, 145)' }} />
-
       </Box>
 
       {/* Card Number Field */}
@@ -130,7 +164,8 @@ const PaymentForm = () => {
         value={formatCardNumber(formData.cardNumber)}
         onChange={handleCardChange}
         margin="normal"
-        required
+        error={!!errors.card}
+        helperText={errors.card}
         slotProps={{
           input: {
             endAdornment: cardType && (
@@ -147,7 +182,6 @@ const PaymentForm = () => {
           }
         }}
       />
-      {errors.card && <FormHelperText error>{errors.card}</FormHelperText>}
 
       <Box display="flex" gap={2} mt={2}>
         {/* Expiry Date Field */}
@@ -184,7 +218,8 @@ const PaymentForm = () => {
 
             setFormData(prev => ({ ...prev, expiry: formattedValue }));
           }}
-          required
+          error={!!errors.expiry}
+          helperText={errors.expiry}
           autoComplete="cc-exp"
           placeholder="MM/YY"
           slotProps={{
@@ -200,7 +235,6 @@ const PaymentForm = () => {
             }
           }}
         />
-        {errors.expiry && <FormHelperText error>{errors.expiry}</FormHelperText>}
 
         {/* CVV Field */}
         <TextField
@@ -211,7 +245,8 @@ const PaymentForm = () => {
           autoComplete="cc-csc"
           value={formData.cvv}
           onChange={handleChange}
-          required
+          error={!!errors.cvv}
+          helperText={errors.cvv}
           slotProps={{
             input: {
               endAdornment: (
@@ -224,7 +259,6 @@ const PaymentForm = () => {
             }
           }}
         />
-        {errors.cvv && <FormHelperText error>{errors.cvv}</FormHelperText>}
 
       </Box>
 
@@ -237,9 +271,9 @@ const PaymentForm = () => {
         value={formData.nameOnCard}
         onChange={handleChange}
         margin="normal"
-        required
+        error={!!errors.nameOnCard}
+        helperText={errors.nameOnCard}
       />
-      {errors.nameOnCard && <FormHelperText error>{errors.nameOnCard}</FormHelperText>}
 
 
       <Box
@@ -272,10 +306,17 @@ const PaymentForm = () => {
         value={formData.address}
         onChange={handleChange}
         margin="normal"
-        required
         autoComplete="street-address"
         error={!!errors.address}
         helperText={errors.address}
+        sx={{
+          '& .MuiInputBase-input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 100px rgb(255, 255, 255) inset !important',
+            WebkitTextFillColor: '#050505 !important',
+            caretColor: '#050505',
+            borderRadius: 'inherit'
+          },
+        }}
         slotProps={{
           input: {
             endAdornment: (
@@ -286,7 +327,6 @@ const PaymentForm = () => {
           }
         }}
       />
-      {errors.expiry && <FormHelperText error>{errors.expiry}</FormHelperText>}
 
 
       {/* Country Selector */}
@@ -298,7 +338,6 @@ const PaymentForm = () => {
         value={formData.country}
         onChange={handleChange}
         margin="normal"
-        required
       >
         <MenuItem value="CO">Colombia</MenuItem>
         <MenuItem value="ES">Spain</MenuItem>

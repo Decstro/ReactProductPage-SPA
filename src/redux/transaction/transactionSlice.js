@@ -11,11 +11,35 @@ const transactionSlice = createSlice({
   initialState,
   reducers: {
     startTransaction: (state, action) => {
-      state.currentTransaction = action.payload;
+      state.currentTransaction = {
+        ...action.payload,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        payment: null,
+        shipping: null,
+        metadata: {} // For any additional data
+      };
     },
-    completeTransaction: (state, action) => {
-      state.items.push(action.payload);
-      state.currentTransaction = null;
+    updateTransaction: (state, action) => {
+      if (state.currentTransaction) {
+        state.currentTransaction = {
+          ...state.currentTransaction,
+          ...action.payload,
+          // Preserve status unless explicitly updated
+          status: action.payload.status || state.currentTransaction.status,
+          updatedAt: new Date().toISOString()
+        };
+      }
+    },
+    completeTransaction: (state) => {
+      if (state.currentTransaction) {
+        state.items.push({
+          ...state.currentTransaction,
+          status: 'completed',
+          completedAt: new Date().toISOString()
+        });
+        state.currentTransaction = null;
+      }
     },
     clearTransaction: (state) => {
       state.currentTransaction = null;
@@ -23,5 +47,11 @@ const transactionSlice = createSlice({
   }
 });
 
-export const { startTransaction, completeTransaction, clearTransaction } = transactionSlice.actions;
+export const {
+  startTransaction,
+  updateTransaction,
+  completeTransaction,
+  clearTransaction
+} = transactionSlice.actions;
+
 export default transactionSlice.reducer;

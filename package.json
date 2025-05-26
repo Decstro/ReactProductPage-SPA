@@ -17,6 +17,7 @@
     "@mui/material": "^7.1.0",
     "@reduxjs/toolkit": "^2.8.2",
     "card-validator": "^10.0.2",
+    "joi": "^17.13.3",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
