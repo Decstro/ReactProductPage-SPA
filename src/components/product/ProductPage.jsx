@@ -14,10 +14,14 @@ import {
   Button,
   IconButton,
   Rating,
+  Badge,
+  Tooltip,
 } from '@mui/material';
 
 
-import { Add, Remove, ShoppingCart as CartIcon } from '@mui/icons-material';
+import {
+  Add, Remove, ShoppingCart as CartIcon, Inventory as InventoryIcon,
+} from '@mui/icons-material';
 
 // Components
 import ImageCarousel from './ImageCarousel';
@@ -103,7 +107,7 @@ function ProductPage() {
   const handleSeriesSClick = () => {
     const newConsole = selectedConsole === 'X' ? 'S' : 'X';
     setSelectedConsole(newConsole);
-    setQuantity(1); // Reset quantity when switching consoles
+    setQuantity(1);
 
     // Optional: Sync with Redux
     const product = products.find(p => p.id === `xbox-series-${newConsole.toLowerCase()}`);
@@ -165,7 +169,6 @@ function ProductPage() {
                 </Typography>
               </Box>
             </Box>
-
           )
         }
 
@@ -285,6 +288,53 @@ function ProductPage() {
               </Box>
               <Box component="span" sx={{ color: 'rgb(40, 201, 40)' }}>
                   Series X/S
+              </Box>
+              <Box sx={{ ml: 'auto' }}>
+                <Tooltip
+                  title="12 units remaining in stock"
+                  arrow
+                  placement="top"
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        bgcolor: 'rgb(50, 50, 50)',
+                        color: '#fff',
+                        fontSize: '0.875rem',
+                        boxShadow: '0px 2px 8px rgba(0,0,0,0.5)',
+                        '& .MuiTooltip-arrow': {
+                          color: 'rgb(50, 50, 50)'
+                        }
+                      }
+                    }
+                  }}
+                >
+                  <IconButton
+                    sx={{
+                      backgroundColor: 'rgb(112, 116, 112, 0.3)',
+                      border: '1px solid rgb(112, 116, 112)',
+                      borderRadius: '4px',
+                      color: '#fff',
+                      '&:hover': {
+                        backgroundColor: 'rgb(112, 116, 112, 0.5)'
+                      }
+                    }}
+                  >
+                    <Badge
+                      badgeContent="12"
+                      color="success"
+                      sx={{
+                        '& .MuiBadge-badge': {
+                          right: -5,
+                          top: -5,
+                          backgroundColor: 'rgb(40, 201, 40)',
+                          color: '#fff'
+                        }
+                      }}
+                    >
+                      <InventoryIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
               </Box>
             </Typography>
           </Box>
