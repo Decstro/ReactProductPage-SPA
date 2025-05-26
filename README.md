@@ -2,7 +2,7 @@
 
 A modern, responsive single-page application showcasing Xbox products with an interactive shopping experience. Built with React, Material UI, and Redux.
 
-![Xbox Series X/S Product Page](https://github.com/Decstro/ReactProductPage-SPA/raw/main/screenshots/product-page.png)
+![Xbox Series X/S Product Page](https://github.com/Decstro/ReactProductPage-SPA/raw/main/product-page.png)
 
 ## Features
 
