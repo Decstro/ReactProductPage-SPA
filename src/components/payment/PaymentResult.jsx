@@ -5,7 +5,6 @@ import { Box, Button, Typography, Paper, Stack, Divider } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { clearTransaction, closePaymentModal } from '../../redux/transaction/transactionSlice';
-import { setSelectedProduct } from '../../redux/product/productSlice';
 
 const PaymentResult = ({ onResetStep }) => {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ const PaymentResult = ({ onResetStep }) => {
 
   const handleClose = () => {
     dispatch(clearTransaction());
-    dispatch(setSelectedProduct(null));
     dispatch(closePaymentModal());
     onResetStep();
   };

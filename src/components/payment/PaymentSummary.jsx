@@ -51,7 +51,7 @@ const PaymentSummary = ({ onBack, onSubmit }) => {
           <Box
             component="img"
             src={selectedProduct?.images[0]?.imgPath || ''}
-            alt={selectedProduct.name}
+            alt={selectedProduct?.name}
             sx={{
               width: 80,
               height: 80,
