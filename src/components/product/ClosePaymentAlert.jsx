@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { clearTransaction } from '../../redux/transaction/transactionSlice';
+import { clearTransaction, resetPaymentStep } from '../../redux/transaction/transactionSlice';
 
 const ClosePaymentAlert = ({
   open,
@@ -20,6 +20,7 @@ const ClosePaymentAlert = ({
 
   const handleConfirm = () => {
     dispatch(clearTransaction());
+    dispatch(resetPaymentStep());
     onConfirm();
     onClose();
   };

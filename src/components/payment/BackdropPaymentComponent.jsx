@@ -8,14 +8,17 @@ import {
   Slide,
   Typography,
   IconButton,
-  Divider
+  Divider,
+  useMediaQuery,
 } from '@mui/material';
 
 import { Close as CloseIcon } from '@mui/icons-material';
-import PaymentForm from './PaymentForm.jsx';
+import PaymentStepper from './PaymentStepper.jsx';
 
 const BackdropPaymentComponent = ({ open, onClose }) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
 
   return (
     <Backdrop
@@ -23,26 +26,43 @@ const BackdropPaymentComponent = ({ open, onClose }) => {
       sx={{
         zIndex: theme.zIndex.modal,
         alignItems: 'flex-end',
-        backdropFilter: 'blur(4px)'
+        backdropFilter: 'blur(4px)',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        overflowY: 'auto',
       }}
       onClick={(e) => {
-        // Only close if clicking the backdrop itself, not the content
         if (e.target === e.currentTarget) {
           onClose();
         }
       }}
     >
-      <Slide direction="up" in={open}>
+      <Slide
+        direction="up"
+        in={open}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%'
+        }}
+      >
         <Box
           sx={{
             width: '100%',
             bgcolor: 'background.paper',
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
+            height: '90vh',
             p: 3,
             boxShadow: 24,
             maxWidth: '600px',
-            margin: '0 auto'
+            margin: '0 auto',
+            ...(isMobile && {
+              height: '85vh',
+              borderRadius: 0,
+              maxWidth: '100%'
+            }),
           }}
         >
           {/* Header with Xbox branding */}
@@ -104,18 +124,31 @@ const BackdropPaymentComponent = ({ open, onClose }) => {
 
           <Divider sx={{ mb: 3 }} />
 
-          <Box mb={3}>
+          {/* Scrollable Content Area */}
+          <Box
+            sx={{
+              flex: 1,
+              overflowY: 'auto',
+              pt: 2,
+              pb: 4, // Add bottom padding for scroll space
+            }}
+          >
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ textAlign: 'left', marginBottom: 1, fontSize: '17px' }}
+              sx={{
+                textAlign: 'left',
+                mb: 3,
+                fontSize: '17px',
+                px: 1 // Add side padding
+              }}
             >
               You&#39;re almost there. Fill in your payment information
               below to securely complete your order.
             </Typography>
 
-            <Box mt={2} display="flex" flexDirection="column" alignItems="flex-start">
-              <PaymentForm />
+            <Box mt={2} display="flex" flexDirection="column" alignItems="center">
+              <PaymentStepper />
             </Box>
           </Box>
 

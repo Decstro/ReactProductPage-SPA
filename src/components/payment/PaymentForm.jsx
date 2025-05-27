@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTransaction } from '../../redux/transaction/transactionSlice.js';
 import { number } from 'card-validator';
@@ -20,7 +21,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CardTypeIcon from '../product/CardTypeIcon.jsx';
 
-const PaymentForm = () => {
+const PaymentForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
   const { currentTransaction } = useSelector(state => state.transactions);
 
@@ -109,6 +110,7 @@ const PaymentForm = () => {
         email: formData.email
       },
     }));
+    onSuccess();
   };
 
 
@@ -394,6 +396,10 @@ const PaymentForm = () => {
       </Button>
     </Box>
   );
+};
+
+PaymentForm.propTypes = {
+  onSuccess: PropTypes.func.isRequired,
 };
 
 export default PaymentForm;

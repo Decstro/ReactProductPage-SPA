@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   items: [],
   currentTransaction: null,
-  status: 'idle'
+  status: 'idle',
+  currentStep: 0
 };
 
 const transactionSlice = createSlice({
@@ -43,6 +44,12 @@ const transactionSlice = createSlice({
     },
     clearTransaction: (state) => {
       state.currentTransaction = null;
+    },
+    setPaymentStep: (state, action) => {
+      state.currentStep = action.payload;
+    },
+    resetPaymentStep: (state) => {
+      state.currentStep = 0;
     }
   }
 });
@@ -51,7 +58,9 @@ export const {
   startTransaction,
   updateTransaction,
   completeTransaction,
-  clearTransaction
+  clearTransaction,
+  setPaymentStep,
+  resetPaymentStep,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

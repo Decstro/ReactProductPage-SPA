@@ -36,6 +36,14 @@ main {
   width: 100vw;
   box-sizing: border-box;
 }
+/* In your global CSS */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(158, 161, 158, 0.5);
+  border-radius: 4px;
+}
 
 .logo {
   height: 6em;

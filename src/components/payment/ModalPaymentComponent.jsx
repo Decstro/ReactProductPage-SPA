@@ -9,7 +9,7 @@ import {
   Divider
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
-import PaymentForm from './PaymentForm.jsx';
+import PaymentStepper from './PaymentStepper.jsx';
 
 
 const ModalPaymentComponent = ({ open, onClose }) => {
@@ -33,8 +33,8 @@ const ModalPaymentComponent = ({ open, onClose }) => {
           borderRadius: 2,
           p: 4,
           boxShadow: 24,
-          outline: 'none', // Remove default focus outline
-          maxWidth: '90%', // Responsive width
+          outline: 'none',
+          maxWidth: '90%',
         }}
       >
         {/* Header with Xbox branding */}
@@ -106,7 +106,7 @@ const ModalPaymentComponent = ({ open, onClose }) => {
             </Typography>
 
             <Box mt={2} display="flex" flexDirection="column" alignItems="flex-start">
-              <PaymentForm />
+              <PaymentStepper />
             </Box>
           </Box>
         </Box>
