@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSelectedProduct, updateProductImages } from '../../redux/product/productSlice';
+import {
+  setSelectedProduct, updateProductImages, fetchProducts,
+} from '../../redux/product/productSlice';
 import {
   startTransaction, openPaymentModal, closePaymentModal,
 } from '../../redux/transaction/transactionSlice';
@@ -86,6 +88,17 @@ function ProductPage() {
   const handleIncrease = () => setQuantity(prev => prev + 1);
   const handleDecrease = () => setQuantity(prev => Math.max(1, prev - 1));
 
+  // Get current product stock
+  const currentProductStock = products.find(
+    p => p.id === `xbox-series-${selectedConsole.toLowerCase()}`
+  )?.stock || 0;
+
+  // 1. First fetch products
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // 2. Then update images after products are loaded
   useEffect(() => {
     dispatch(updateProductImages({
       productId: 'xbox-series-x',
@@ -95,7 +108,7 @@ function ProductPage() {
       productId: 'xbox-series-s',
       images: xboxSeriesSImages
     }));
-  }, [dispatch]);
+  }, [products, dispatch]);
 
   useEffect(() => {
     // Only reopen modal if transaction was incomplete
@@ -104,7 +117,7 @@ function ProductPage() {
       setSelectedConsole(currentTransaction.productId.split('-')[2].toUpperCase());
       setQuantity(currentTransaction.quantity);
     }
-  }, [currentTransaction]);
+  }, [currentTransaction, dispatch]);
 
   const handleSeriesSClick = () => {
     const newConsole = selectedConsole === 'X' ? 'S' : 'X';
@@ -127,6 +140,11 @@ function ProductPage() {
   };
 
   const handlePayment = (totalAmount) => {
+    if (currentProductStock < quantity) {
+      alert('Not enough stock available');
+      return;
+    }
+
     dispatch(startTransaction({
       productId: `xbox-series-${selectedConsole.toLowerCase()}`,
       quantity,
@@ -293,7 +311,7 @@ function ProductPage() {
               </Box>
               <Box sx={{ ml: 'auto' }}>
                 <Tooltip
-                  title="12 units remaining in stock"
+                  title={`${currentProductStock} Units remaining in stock`}
                   arrow
                   placement="top"
                   componentsProps={{
@@ -322,7 +340,7 @@ function ProductPage() {
                     }}
                   >
                     <Badge
-                      badgeContent="12"
+                      badgeContent={currentProductStock}
                       color="success"
                       sx={{
                         '& .MuiBadge-badge': {

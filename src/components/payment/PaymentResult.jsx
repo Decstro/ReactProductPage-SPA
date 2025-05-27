@@ -5,10 +5,12 @@ import { Box, Button, Typography, Paper, Stack, Divider } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { clearTransaction, closePaymentModal } from '../../redux/transaction/transactionSlice';
+import { fetchProducts } from '../../redux/product/productSlice';
 
 const PaymentResult = ({ onResetStep }) => {
   const dispatch = useDispatch();
   const { currentTransaction } = useSelector(state => state.transactions);
+  console.log(currentTransaction);
 
   // Simulate transaction status (replace with real status if available)
   const isSuccess = currentTransaction?.payment?.status === 'succeeded';
@@ -23,6 +25,7 @@ const PaymentResult = ({ onResetStep }) => {
 
   const handleClose = () => {
     dispatch(clearTransaction());
+    dispatch(fetchProducts()); // Refresh all products
     dispatch(closePaymentModal());
     onResetStep();
   };

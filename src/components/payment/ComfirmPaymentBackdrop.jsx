@@ -34,7 +34,6 @@ const ConfirmPaymentBackdrop = ({
       // Mock API call - replace with your actual payment API
       const response = await mockPaymentApiCall(amount);
 
-      // Update transaction with backend response
       dispatch(updateTransaction({
         status: 'completed',
         payment: {

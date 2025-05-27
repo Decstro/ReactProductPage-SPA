@@ -39,7 +39,6 @@ const transactionSlice = createSlice({
           status: 'completed',
           completedAt: new Date().toISOString()
         });
-        state.currentTransaction = null;
       }
     },
     clearTransaction: (state) => {
