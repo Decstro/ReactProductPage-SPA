@@ -50,7 +50,13 @@ const transactionSlice = createSlice({
     },
     resetPaymentStep: (state) => {
       state.currentStep = 0;
-    }
+    },
+    openPaymentModal: (state) => {
+      state.isPaymentOpen = true;
+    },
+    closePaymentModal: (state) => {
+      state.isPaymentOpen = false;
+    },
   }
 });
 
@@ -61,6 +67,8 @@ export const {
   clearTransaction,
   setPaymentStep,
   resetPaymentStep,
+  openPaymentModal,
+  closePaymentModal,
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

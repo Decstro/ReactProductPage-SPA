@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPaymentStep } from '../../redux/transaction/transactionSlice';
-import { Stepper, Step, StepLabel, Box, Button, } from '@mui/material';
+import { setPaymentStep, resetPaymentStep } from '../../redux/transaction/transactionSlice';
+import { Stepper, Step, StepLabel, Box, } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PaymentForm from './PaymentForm';
 import PaymentSummary from './PaymentSummary';
@@ -22,6 +22,10 @@ const PaymentStepper = () => {
     dispatch(setPaymentStep(currentStep - 1));
   };
 
+  const handleReset = () => {
+    dispatch(resetPaymentStep());
+  };
+
   const getStepContent = (step) => {
     switch (step) {
     case 0:
@@ -33,7 +37,7 @@ const PaymentStepper = () => {
         transaction={currentTransaction}
       />;
     case 2:
-      return <PaymentResult />;
+      return <PaymentResult onResetStep={handleReset} />;
     default:
       return <PaymentForm onSuccess={handleNext} />;
     }

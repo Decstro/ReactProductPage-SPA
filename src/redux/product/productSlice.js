@@ -6,7 +6,7 @@ const initialState = {
       id: 'xbox-series-x',
       name: 'Xbox Series X',
       price: 499.99,
-      images: [], // Will be populated
+      images: [],
       rating: 4.5,
       description: 'Experience next-gen 4K gaming at 120 FPS'
     },
@@ -14,7 +14,7 @@ const initialState = {
       id: 'xbox-series-s',
       name: 'Xbox Series S',
       price: 299.99,
-      images: [], // Will be populated
+      images: [],
       rating: 4.3,
       description: 'All-digital 1440p gaming'
     }
@@ -22,7 +22,6 @@ const initialState = {
   selectedProduct: null,
   status: 'idle'
 };
-
 const productSlice = createSlice({
   name: 'products',
   initialState,

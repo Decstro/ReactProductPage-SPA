@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setSelectedProduct, updateProductImages } from '../../redux/product/productSlice';
-import { startTransaction } from '../../redux/transaction/transactionSlice';
+import {
+  startTransaction, openPaymentModal, closePaymentModal,
+} from '../../redux/transaction/transactionSlice';
 
 // MUI components
 import {
@@ -57,11 +59,11 @@ const xboxSeriesSImages = [
 function ProductPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const isPaymentOpen = useSelector(state => state.transactions.isPaymentOpen);
   const { items: products } = useSelector(state => state.products);
   const { currentTransaction } = useSelector(state => state.transactions);
 
   // Local component state
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [showCloseAlert, setShowCloseAlert] = useState(false);
   // Initialize local state from persisted transaction
   const [quantity, setQuantity] = useState(
@@ -98,7 +100,7 @@ function ProductPage() {
   useEffect(() => {
     // Only reopen modal if transaction was incomplete
     if (currentTransaction && currentTransaction.status === 'pending') {
-      setIsPaymentOpen(true);
+      dispatch(openPaymentModal());
       setSelectedConsole(currentTransaction.productId.split('-')[2].toUpperCase());
       setQuantity(currentTransaction.quantity);
     }
@@ -121,7 +123,7 @@ function ProductPage() {
   };
 
   const handleConfirmClose = () => {
-    setIsPaymentOpen(false);
+    dispatch(closePaymentModal());
   };
 
   const handlePayment = (totalAmount) => {
@@ -131,7 +133,7 @@ function ProductPage() {
       amount: totalAmount,
       date: new Date().toISOString()
     }));
-    setIsPaymentOpen(true);
+    dispatch(openPaymentModal());
   };
 
 
